@@ -1,10 +1,14 @@
 # One Suno API
 
+**简体中文** | [English](./README_EN.md)
+
+## 概述
+
 一个使用 Go 语言构建的 Suno API 网关服务。整合多个第三方 Suno API 提供商，通过加权轮询进行负载均衡，提供统一请求/响应格式的 Suno API 服务
 
 **优势**
 
-- *统一接口* - Suno AI 目前未开放官方 API，市面上存在多个基于爬虫实现的非官方 API 服务，One Suno API 提供标准化的请求/响应格式
+- *统一接口* - Suno AI 目前未开放官方 API，One Suno API 提供标准化的请求/响应格式来统一市面上多家基于爬虫实现的非官方 API 服务接口
 - *负载均衡* - 使用加权轮询算法分配请求
 - *易于扩展* - 模块化设计，支持快速接入新的第三方的 Suno API
 
@@ -61,6 +65,7 @@
 - [x] 接入 [acedata.cloud](https://platform.acedata.cloud/documents/suno-audios-integration/)
 - [ ] 接入 [suno4.cn](https://suno4.cn/)
 - [ ] 接入 [sunoapi.org](https://docs.sunoapi.org/)
+- [ ] 接入 [piapi.ai](https://piapi.ai/docs/music-api/create-task)
 
 ---
 
