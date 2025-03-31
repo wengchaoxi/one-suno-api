@@ -4,9 +4,9 @@ import (
 	"errors"
 
 	"github.com/gin-gonic/gin"
-	"github.com/wengchaoxi/one-suno-api/pkg/logger"
 
 	"github.com/wengchaoxi/one-suno-api/internal/dto"
+	"github.com/wengchaoxi/one-suno-api/pkg/logger"
 )
 
 func (s *Service) createAudioHandler(ctx *gin.Context) {
@@ -26,9 +26,12 @@ func (s *Service) createAudioHandler(ctx *gin.Context) {
 
 	resp, err := meta.Provider.CreateAudio(&req)
 	if err != nil {
+		logger.ErrorWithRequest(ctx, "create audio", err, req)
 		dto.SendResponse(ctx, dto.STATUS_SERVER_ERROR, nil)
 		return
 	}
+	resp.ProviderID = meta.Id
 
+	logger.InfoWithRequest(ctx, "create audio", req)
 	dto.SendResponse(ctx, dto.STATUS_SUCCESS, resp)
 }

@@ -50,10 +50,10 @@ func NewAcedataProvider(opts *AcedataProviderOptions) *AcedataProvider {
 //		"continue_at": 1,
 //		"replace_section_end": 2,
 //		"replace_section_start": 3,
-//		"callback_url": "http://callback.com"
-//	  }
+//		"callback_url": "https://xxx.com/callback"
+//		}
 type AcedataCreateSunoAudioRequest struct {
-	Action              string `json:"action"`
+	Action              string `json:"action"` // generate, extend, contact, artist_consistency, upload_extend, cover, upload_cover, replace_section, stems
 	Prompt              string `json:"prompt"`
 	Model               string `json:"model"`
 	Lyric               string `json:"lyric"`
@@ -71,48 +71,70 @@ type AcedataCreateSunoAudioRequest struct {
 }
 
 //	{
+//		"success": true,
+//		"task_id": "04067c0f-6655-44b6-8c4f-f443af573ebf",
+//		"trace_id": "c0a574b6-d5b1-4ddc-9529-b1a3d502a7e9",
 //		"data": [
 //		  {
-//			"id": "75d8e08f-b25f-450e-9496-7b52e393098b",
-//			"lyric": "[Verse]\nSleigh bells ringin', choirs singin'\nSnowflakes fallin', presents glistenin' (glistenin')\nIn the air, there's a feeling of joy\nSpreadin' love to every girl and boy\n[Verse 2]\nCandles glowin', fire cracklin'\nStockings hangin', children wrappin'\nWith a smile, they unwrap their surprise\nIn their hearts, the magic never dies\n[Chorus]\nJingle all the way (jingle all the way)\nIn the winter wonderland, we play (oh-oh)\nHear the carols echo through the night (echo through the night)\nMerry Christmas, oh what a delight (oh-oh-oh)",
-//			"model": "chirp-v3",
-//			"style": "pop upbeat",
+//			"id": "8bc267d2-9794-412c-a504-974ce3cba254",
 //			"title": "Jingle All the Way",
-//			"prompt": "a christmas song",
-//			"audio_url": "https://audiopipe.suno.ai/?item_id=75d8e08f-b25f-450e-9496-7b52e393098b",
-//			"image_url": "https://cdn1.suno.ai/image_75d8e08f-b25f-450e-9496-7b52e393098b.png",
-//			"video_url": "",
-//			"created_at": "2024-04-03T11:54:30.424Z"
+//			"image_url": "https://cdn2.suno.ai/image_8bc267d2-9794-412c-a504-974ce3cba254.jpeg",
+//			"lyric": "[Verse]\nSnowflakes dancing in the street\nWarm cocoa can't be beat\nNeighbours laugh as carolers sing\nJoyful bells begin to ring\n[Verse 2]\nCandy canes and mistletoe\nSparkling lights that gleam and glow\nWrinkled paper ribbons flying\nSmiling faces never lying\n[Chorus]\nJingle all the way tonight\nStars above are shining bright\nGifts of laughter love and cheer\nMaking memories so dear\n[Verse 3]\nStockings hanging by the fire\nEvery heart is full of desire\nSilent wishes whispered low\nUnderneath the mistletoe\n[Bridge]\nChildren dreaming of delight\nSanta's sleigh takes flight tonight\nMagic sparkles in the air\nChristmas wonder everywhere\n[Verse 4]\nWrapping presents with a bow\nFeeling love in every show\nFamily gathered round the tree\nHoliday spirit wild and free",
+//			"audio_url": "https://cdn1.suno.ai/8bc267d2-9794-412c-a504-974ce3cba254.mp3",
+//			"video_url": "https://cdn1.suno.ai/8bc267d2-9794-412c-a504-974ce3cba254.mp4",
+//			"created_at": "2025-01-04T03:26:59.710Z",
+//			"model": "chirp-v4",
+//			"state": "succeeded",
+//			"prompt": "A song for Christmas",
+//			"style": "pop",
+//			"duration": 181.56
 //		  },
 //		  {
-//			"id": "e639fefd-bbd3-4858-b16d-45e7d4aa9313",
-//			"lyric": "[Verse]\nSleigh bells ringin', choirs singin'\nSnowflakes fallin', presents glistenin' (glistenin')\nIn the air, there's a feeling of joy\nSpreadin' love to every girl and boy\n[Verse 2]\nCandles glowin', fire cracklin'\nStockings hangin', children wrappin'\nWith a smile, they unwrap their surprise\nIn their hearts, the magic never dies\n[Chorus]\nJingle all the way (jingle all the way)\nIn the winter wonderland, we play (oh-oh)\nHear the carols echo through the night (echo through the night)\nMerry Christmas, oh what a delight (oh-oh-oh)",
-//			"model": "chirp-v3",
-//			"style": "pop upbeat",
+//			"id": "8ebdcf48-1d4d-4b8a-94bc-ec46a793f590",
 //			"title": "Jingle All the Way",
-//			"prompt": "a christmas song",
-//			"audio_url": "https://audiopipe.suno.ai/?item_id=e639fefd-bbd3-4858-b16d-45e7d4aa9313",
-//			"image_url": "https://cdn1.suno.ai/image_e639fefd-bbd3-4858-b16d-45e7d4aa9313.png",
-//			"video_url": "",
-//			"created_at": "2024-04-03T11:54:30.424Z"
+//			"image_url": "https://cdn2.suno.ai/image_8ebdcf48-1d4d-4b8a-94bc-ec46a793f590.jpeg",
+//			"lyric": "[Verse]\nSnowflakes dancing in the street\nWarm cocoa can't be beat\nNeighbours laugh as carolers sing\nJoyful bells begin to ring\n[Verse 2]\nCandy canes and mistletoe\nSparkling lights that gleam and glow\nWrinkled paper ribbons flying\nSmiling faces never lying\n[Chorus]\nJingle all the way tonight\nStars above are shining bright\nGifts of laughter love and cheer\nMaking memories so dear\n[Verse 3]\nStockings hanging by the fire\nEvery heart is full of desire\nSilent wishes whispered low\nUnderneath the mistletoe\n[Bridge]\nChildren dreaming of delight\nSanta's sleigh takes flight tonight\nMagic sparkles in the air\nChristmas wonder everywhere\n[Verse 4]\nWrapping presents with a bow\nFeeling love in every show\nFamily gathered round the tree\nHoliday spirit wild and free",
+//			"audio_url": "https://cdn1.suno.ai/8ebdcf48-1d4d-4b8a-94bc-ec46a793f590.mp3",
+//			"video_url": "https://cdn1.suno.ai/8ebdcf48-1d4d-4b8a-94bc-ec46a793f590.mp4",
+//			"created_at": "2025-01-04T03:26:59.710Z",
+//			"model": "chirp-v4",
+//			"state": "succeeded",
+//			"prompt": "A song for Christmas",
+//			"style": "pop",
+//			"duration": 203.8
 //		  }
-//		],
-//		"success": true
-//	  }
+//		]
+//	}
+type AcedataSunoAudioData struct {
+	Id        string  `json:"id"`
+	Title     string  `json:"title"`
+	ImageUrl  string  `json:"image_url"`
+	Lyric     string  `json:"lyric"`
+	AudioUrl  string  `json:"audio_url"`
+	VideoUrl  string  `json:"video_url"`
+	CreatedAt string  `json:"created_at"`
+	Model     string  `json:"model"`
+	State     string  `json:"state"` // succeeded, pending, running, error
+	Prompt    string  `json:"prompt"`
+	Style     string  `json:"style"`
+	Duration  float64 `json:"duration"`
+}
+
+//	"error": {
+//	    "code": "forbidden",
+//	    "message": "Song Description contained artist name: eminem"
+//	}
+type AcedataError struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
 type AcedataCreateSunoAudioResponse struct {
-	Data []struct {
-		Id        string `json:"id"`
-		Lyric     string `json:"lyric"`
-		Model     string `json:"model"`
-		Style     string `json:"style"`
-		Title     string `json:"title"`
-		Prompt    string `json:"prompt"`
-		AudioUrl  string `json:"audio_url"`
-		ImageUrl  string `json:"image_url"`
-		VideoUrl  string `json:"video_url"`
-		CreatedAt string `json:"created_at"`
-	} `json:"data"`
-	Success bool `json:"success"`
+	Success bool                   `json:"success"`
+	TaskId  string                 `json:"task_id"`
+	TraceId string                 `json:"trace_id"`
+	Data    []AcedataSunoAudioData `json:"data,omitempty"`
+	Error   AcedataError           `json:"error,omitempty"`
 }
 
 func (a *AcedataProvider) CreateSunoAudio(req *AcedataCreateSunoAudioRequest) (*AcedataCreateSunoAudioResponse, error) {

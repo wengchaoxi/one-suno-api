@@ -8,14 +8,15 @@
 
 **优势**
 
-- *统一接口* - Suno AI 目前未开放官方 API，One Suno API 提供标准化的请求/响应格式来统一市面上多家基于爬虫实现的非官方 API 服务接口
-- *负载均衡* - 使用加权轮询算法分配请求
-- *易于扩展* - 模块化设计，支持快速接入新的第三方的 Suno API
+- 统一接口：Suno AI 目前未开放官方 API，One Suno API 提供标准化的请求/响应格式来统一市面上多家基于爬虫实现的非官方 API 服务接口
+- 负载均衡：使用加权轮询算法分配请求
+- 易于扩展：模块化设计，支持快速接入新的第三方的 Suno API
+- 容器化部署：使用 Docker 进行部署，方便部署和管理
 
 
 ## 接口文档
 
-### `POST /v1/audio`
+### `POST /v1/audios`
 
 - Request
 
@@ -40,6 +41,7 @@
     "msg": "Success",
     "data": [{
         "id": "6e81bebe-33ff-4527-a5c8-xxxxxxxxxxxx",
+        "title": "a-romantic-song",
         "video_url": "https://cdn1.suno.ai/6e81bebe-33ff-4527-a5c8-xxxxxxxxxxxx.mp4",
         "audio_url": "https://cdn1.suno.ai/6e81bebe-33ff-4527-a5c8-xxxxxxxxxxxx.mp3",
         "image_url": "https://cdn1.suno.ai/image_6e81bebe-33ff-4527-a5c8-xxxxxxxxxxxx.png",
@@ -48,13 +50,12 @@
         "model_name": "chirp-v3",
         "metadata": {
             "tags": "romantic ballad",
-            "prompt": "[Verse]... [Verse 2]... [Chorus]...",
-            "gpt_description_prompt": null,
+            "prompt": "a romantic song",
+            "gpt_description_prompt": "a romantic song",
+            "lyric": "[Verse]... [Verse 2]... [Chorus]...",
             "duration": 29.6
         },
-        "created_at": "2024-04-09T08:35:53.414Z",
-        "title": "a-romantic-song",
-        "is_custom": true,
+        "created_at": "2024-04-09T08:35:53.414Z"
     }]
 }
 ```
@@ -63,9 +64,8 @@
 ## 提供商列表
 
 - [x] 接入 [acedata.cloud](https://platform.acedata.cloud/documents/suno-audios-integration/)
-- [ ] 接入 [suno4.cn](https://suno4.cn/)
-- [ ] 接入 [sunoapi.org](https://docs.sunoapi.org/)
 - [ ] 接入 [piapi.ai](https://piapi.ai/docs/music-api/create-task)
+- [ ] 接入 [sunoapi.org](https://docs.sunoapi.org/)
 
 ---
 

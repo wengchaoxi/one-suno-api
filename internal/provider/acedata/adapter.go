@@ -16,7 +16,7 @@ func (a *AcedataProvider) CreateAudio(req *dto.CreateAudioRequest) (*dto.CreateA
 		Instrument:          req.IsInstrument,
 		Title:               req.Title,
 		Style:               req.Tags,
-		StyleNegative:       req.TagsNegative,
+		StyleNegative:       req.NegativeTags,
 		PersonaId:           req.PersonaId,
 		ContinueAt:          req.ContinueAt,
 		ReplaceSectionEnd:   req.ReplaceSectionEnd,
@@ -54,10 +54,13 @@ func (a *AcedataProvider) CreateAudio(req *dto.CreateAudioRequest) (*dto.CreateA
 			ImageLargeUrl:     d.ImageUrl,
 			VideoUrl:          d.VideoUrl,
 			Metadata: dto.AudioMetadata{
-				Prompt:               d.Prompt,
 				Tags:                 d.Style,
+				Prompt:               d.Prompt,
 				GPTDescriptionPrompt: d.Prompt,
+				Lyric:                d.Lyric,
+				Duration:             d.Duration,
 			},
+			CreatedAt: d.CreatedAt,
 		}
 		resp.Data = append(resp.Data, audio)
 	}

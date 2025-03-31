@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 	"net"
 	"net/http"
 	"os"
@@ -13,9 +12,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/joho/godotenv/autoload"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 
+	"github.com/wengchaoxi/one-suno-api/internal/model"
 	"github.com/wengchaoxi/one-suno-api/internal/provider"
 	"github.com/wengchaoxi/one-suno-api/internal/provider/acedata"
+	"github.com/wengchaoxi/one-suno-api/internal/repository"
 	"github.com/wengchaoxi/one-suno-api/internal/service"
 	"github.com/wengchaoxi/one-suno-api/pkg/logger"
 )
@@ -36,6 +39,16 @@ func getEnv(key, defaultValue string) string {
 func main() {
 	logger.Init()
 
+	db, dberr := gorm.Open(sqlite.Open(getEnv("DB_PATH", "one-suno-api.db")), &gorm.Config{})
+	if dberr != nil {
+		logger.Panicf("failed to connect database: %v", dberr)
+	}
+	if err := db.AutoMigrate(&model.ApiKey{}, &model.User{}); err != nil {
+		logger.Panicf("failed to migrate database: %v", err)
+	}
+	userRepo := repository.NewUserRepository(db)
+	apikeyRepo := repository.NewApiKeyRepository(db)
+
 	providerManager := provider.ProviderManager{
 		Balancer: provider.NewWeightedRoundRobinBalancer(),
 	}
@@ -51,8 +64,10 @@ func main() {
 	})
 
 	app := service.New(&service.ServiceOptions{
-		ProviderManager: providerManager,
-		ApiKey:          API_KEY,
+		ProviderManager:  providerManager,
+		ApiKey:           API_KEY,
+		UserRepository:   userRepo,
+		ApiKeyRepository: apikeyRepo,
 	})
 	engine := gin.Default()
 	app.Init(engine)
@@ -65,18 +80,17 @@ func main() {
 	go func() {
 		defer wg.Done()
 		if err = srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Panicf("server err: %v\n", err)
-			os.Exit(-1)
+			logger.Panicf("server listen error", err)
 		}
 	}()
-	log.Printf("Running on http://%s\n", addr)
+	logger.Infof("Running on http://%s\n", addr)
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, syscall.SIGTERM)
 	<-quit
-	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 360*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Printf("server shutdown err: %v\n", err)
+		logger.Infof("server shutdown err: %v\n", err)
 	}
 	wg.Wait()
 }

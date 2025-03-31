@@ -1,11 +1,12 @@
 package dto
 
 type CreateAudioRequest struct {
+	ProviderID          string `json:"provider_id"`
 	Model               string `json:"mv"`
 	Title               string `json:"title"`
 	Prompt              string `json:"prompt"`
 	Tags                string `json:"tags"`
-	TagsNegative        string `json:"tags_negative"`
+	NegativeTags        string `json:"negative_tags"`
 	IsCustom            bool   `json:"custom"`
 	IsInstrument        bool   `json:"make_instrumental"`
 	ContinueAt          int    `json:"continue_at"`
@@ -18,7 +19,8 @@ type CreateAudioRequest struct {
 }
 
 type CreateAudioResponse struct {
-	Data []AudioData `json:"data"`
+	ProviderID string      `json:"provider_id"`
+	Data       []AudioData `json:"data"`
 }
 
 type AudioData struct {
@@ -37,6 +39,7 @@ type AudioData struct {
 type AudioMetadata struct {
 	Tags                 string  `json:"tags"`
 	Prompt               string  `json:"prompt"`
-	Duration             float64 `json:"duration"`
 	GPTDescriptionPrompt string  `json:"gpt_description_prompt"` // Deprecated: use Prompt instead
+	Lyric                string  `json:"lyric"`
+	Duration             float64 `json:"duration"`
 }

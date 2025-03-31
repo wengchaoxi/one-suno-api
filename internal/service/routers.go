@@ -10,14 +10,34 @@ func (s *Service) Init(engine *gin.Engine) {
 	engine.Use(middleware.Cors())
 	engine.Use(middleware.Auth(s.opts.ApiKey, "/"))
 
-	engine.GET("/", s.whoamiHandler())
+	engine.GET("/", func(ctx *gin.Context) {
+		ctx.File("./static/index.html")
+	})
+	engine.Static("/assets", "./static/assets")
 
-	// Deprecated: use /v1/create instead
-	engine.POST("/api/ai_music", s.createAudioHandler)
-
-	// v1
 	v1 := engine.Group("/v1")
 
-	// create
-	v1.POST("/create", s.createAudioHandler)
+	// manage users
+	users := v1.Group("/users")
+	users.GET("/:id", s.getUserHandler)
+	users.PATCH("/:id", s.updateUserHandler)
+
+	// manage providers
+	providers := v1.Group("/providers")
+	providers.POST("/", s.createProviderHandler)
+	providers.GET("/", s.getProvidersHandler)
+	providers.PATCH("/:id", s.updateProviderHandler)
+	providers.DELETE("/:id", s.deleteProviderHandler)
+
+	// manage api keys
+	keys := v1.Group("/keys")
+	keys.POST("/", s.createApiKeyHandler)
+	keys.GET("/", s.getApiKeysHandler)
+	keys.PATCH("/:id", s.updateApiKeyHandler)
+	keys.DELETE("/:id", s.deleteApiKeyHandler)
+
+	// audios
+	v1.POST("/audios", s.createAudioHandler)
+	// Deprecated: use /v1/audios instead
+	engine.POST("/api/ai_music", s.createAudioHandler)
 }

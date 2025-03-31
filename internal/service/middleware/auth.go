@@ -10,15 +10,23 @@ import (
 
 func Auth(apiKey string, excludePath ...string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		if slices.Contains(excludePath, ctx.Request.URL.Path) {
+		if len(apiKey) == 0 || slices.Contains(excludePath, ctx.Request.URL.Path) {
 			ctx.Next()
 			return
 		}
 
-		k := ctx.Request.Header.Get("x-api-key")
-		if len(apiKey) > 0 && apiKey == k {
+		// http header x-api-key: xxx
+		if apiKey == ctx.Request.Header.Get("x-api-key") {
 			ctx.Next()
 			return
+		}
+
+		// http header Authorization: Bearer xxx
+		if len(ctx.Request.Header.Get("Authorization")) > 7 {
+			if apiKey == ctx.Request.Header.Get("Authorization")[7:] {
+				ctx.Next()
+				return
+			}
 		}
 
 		dto.SendResponse(ctx, dto.STATUS_UNAUTHORIZED, nil)

@@ -7,8 +7,8 @@ type Provider interface {
 }
 
 type ProviderMeta struct {
-	Id       string `json:"id"`
-	Weight   int    `json:"weight"`
+	Id       string
+	Weight   int
 	Provider Provider
 }
 

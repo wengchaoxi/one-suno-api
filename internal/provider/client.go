@@ -18,7 +18,7 @@ func NewHTTPClient(headers map[string]string) *http.Client {
 			Transport: tr,
 			headers:   headers,
 		},
-		Timeout: 60 * time.Second,
+		Timeout: 360 * time.Second,
 	}
 }
 
