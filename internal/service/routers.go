@@ -19,7 +19,7 @@ func (s *Service) Init(engine *gin.Engine) {
 
 	// manage users
 	users := v1.Group("/users")
-	users.GET("/:id", s.getUserHandler)
+	users.POST("/token", s.createUserTokenHandler)
 	users.PATCH("/:id", s.updateUserHandler)
 
 	// manage providers
